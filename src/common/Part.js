@@ -19,7 +19,7 @@ class Part {
    * @param {String} content
    * @param {PartType} type
    */
-  constructor(content, type) {
+  constructor(content, type = PartType.Perfect) {
     this.content = content;
     this.type = type;
   }
@@ -29,7 +29,22 @@ class Part {
   }
 }
 
+class PartList extends Array {
+  push(...items) {
+    if (items.filter(item => !(item instanceof Part)).length > 0) {
+      throw new Error('only instance of Part is allowed to push');
+    }
+
+    return super.push(...items);
+  }
+
+  toString() {
+    return this.map(item => item.toString()).join('');
+  }
+}
+
 module.exports = {
   PartType,
   Part,
+  PartList,
 };

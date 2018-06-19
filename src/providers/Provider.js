@@ -1,6 +1,8 @@
 const axios = require('axios').default;
 const qs = require('qs');
 
+const { Part } = require('../common/Part');
+
 /**
  * @typedef {Object} ProviderRequestFormat
  * @prop {String} [url] - Request URL without querystrings
@@ -24,10 +26,20 @@ class Provider {
     throw new Error('formatRequest must be implemented');
   }
 
+  /**
+   *
+   * @param {*} data
+   * @returns {Part[]}
+   */
   parse(data) {
     throw new Error('parse must be implemented');
   }
 
+  /**
+   *
+   * @param {String} content
+   * @returns {Promise<Part[]>}
+   */
   async execute(content) {
     const request = this.formatRequest(content);
 
